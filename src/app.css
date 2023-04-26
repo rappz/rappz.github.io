@@ -12,6 +12,15 @@
                 transition-all duration-300 ease-linear
                 cursor-pointer;
   }
+  .nav-icon-logout {
+    @apply relative flex items-center justify-center
+                h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
+                bg-gray-800 text-green-500
+                hover:bg-red-600 hover:text-white
+                rounded-3xl hover:rounded-xl
+                transition-all duration-300 ease-linear
+                cursor-pointer;
+  }
   .nav-tooltip {
     @apply absolute w-auto p-2 m-2 min-w-max left-14
             rounded-md shadow-md
@@ -38,5 +47,10 @@
                 rounded-3xl hover:rounded-xl
                 transition-all duration-300 ease-linear
                 cursor-pointer;
+  }
+  .messages{
+    @apply bg-gray-900 text-white shadow-lg w-72 h-auto 
+    m-2 rounded-md
+    text-base font-bold
   }
 }

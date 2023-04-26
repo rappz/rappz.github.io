@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { currentUser, pb } from "./pokectbase";
+  import { currentUser, pb, loginStatus } from "./pokectbase";
+  import  { writable } from 'svelte/store';
 
   let username: string;
   let password: string;
-
+  
   async function login() {
     await pb.collection("users").authWithPassword(username, password);
+    loginStatus.set(true);
   }
 
   async function signUp() {
@@ -23,16 +25,22 @@
     }
   }
 
-  function signOut() {
+  export function signOut() {
     pb.authStore.clear();
+    loginStatus.set(false);
+  }
+ 
+  function continueLogin() {
+    loginStatus.set(true);
   }
 </script>
 
 <div class="flex items-center justify-center h-full w-full mt-0">
-  {#if $currentUser}
+ {#if $currentUser}
     <div class="flex flex-col">
       <p class="text-green-500">Signed in as {$currentUser.username}</p>
       <button class="login-button flex" on:click={signOut}>Logout</button>
+      <button class="login-button flex" on:click={continueLogin}>Continue</button>
     </div>
   {:else}
     <form on:submit|preventDefault>

@@ -4,9 +4,10 @@
     export let height;
     export let icon;
     export let tooltip;
+    export let clazz;
 </script>
 
-<div class="nav-icon group">
+<div class="{clazz} group">
     <Icon icon={icon} width={width} height={height} />
     <span class="nav-tooltip group-hover:scale-100">{tooltip}</span>
 </div>
