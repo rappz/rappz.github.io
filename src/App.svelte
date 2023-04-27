@@ -1,12 +1,11 @@
 <script lang="ts">
   import Nav from "./lib/nav.svelte";
   import Login from "./lib/Login.svelte";
-  import { currentUser, pb, loginStatus } from "./lib/pokectbase";
+  import { currentUser, pb } from "./lib/pokectbase";
   import Messages from "./lib/Messages.svelte";
 
   function signOut() {
     pb.authStore.clear();
-    loginStatus.set(false);
     console.log("logout");
     
   }

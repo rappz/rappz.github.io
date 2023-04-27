@@ -7,7 +7,7 @@
   let newMessage: string;
   let messages = [];
   let unsubscribe: () => void;
-
+  //let msg: string;
   onMount(async () => {
     const resultList = await pb.collection("messages").getList(1, 50, {
       sort: "created",
@@ -32,7 +32,7 @@
   onDestroy(() => {
     unsubscribe();
   });
-  async function sendMessage() {
+  async function sendMessage(){
     const data = {
       text: newMessage,
       user: $currentUser.id,
@@ -40,13 +40,9 @@
     const createdMessage = await pb.collection("messages").create(data);
     newMessage = "";
   } 
-  async function deleteMessage() {
-    const data = {
-      id: selectedId,
-      user: $currentUser.id,
-    };
-    const deletedMessage = await pb.collection("messages").delete(selectedId);
-    newMessage = "";
+  async function deleteMessage(msg: string)  {
+    const deletedMessage = await pb.collection("messages").delete(msg,$currentUser);
+    
   }
 </script>
 
@@ -67,13 +63,17 @@
           </small>
           <p class="msg-text login-text">{message.text}</p>
         </div>
-        <Icon class="delete-msg justify-self-end" icon="fa6-solid:x" width="12" height="12" />   
+        {#if $currentUser.username == message.expand?.user?.username}
+        <div on:click={() => deleteMessage(message.id)} on:keypress={() => deleteMessage(message.id)} class="h-fit w-fit justify-items-end ml-auto" >
+        <Icon  class="delete-msg justify-self-end" icon="fa6-solid:x" width="12" height="12" />  
+        </div> 
+        {/if}
       </div>
     {/each}
   </div>
   <form class="flex" on:submit|preventDefault={sendMessage}>
     <input
-      class="login-text flex items-center"
+      class="login-text flex items-center bg-gray-900"
       placeholder="Message"
       type="text"
       bind:value={newMessage}

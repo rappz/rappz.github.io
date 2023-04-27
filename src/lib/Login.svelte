@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentUser, pb, loginStatus } from "./pokectbase";
+  import { currentUser, pb } from "./pokectbase";
   import  { writable } from 'svelte/store';
 
   let username: string;
@@ -7,7 +7,7 @@
   
   async function login() {
     await pb.collection("users").authWithPassword(username, password);
-    loginStatus.set(true);
+    console.log($currentUser.username);
   }
 
   async function signUp() {
@@ -27,11 +27,9 @@
 
   export function signOut() {
     pb.authStore.clear();
-    loginStatus.set(false);
   }
  
   function continueLogin() {
-    loginStatus.set(true);
   }
 </script>
 
